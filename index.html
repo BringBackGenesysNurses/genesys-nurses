@@ -1120,4 +1120,8 @@ ${city}`
   function openMailto() {
     const { emails } = getRecipients();
     const to = emails.join(',');
-    const subject
+    const subject = encodeURIComponent(generatedSubject || 'End the Strike at Henry Ford Genesys Hospital');
+    const body = encodeURIComponent(generatedBody || '');
+    window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+  }
+</script>
