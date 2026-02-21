@@ -1116,7 +1116,8 @@ ${city}`
   }
 
   function copyEmail() {
-    const fullText = `Subject: ${generatedSubject}\n\n${generatedBody}`;
+    const { emails, names } = getRecipients();
+    const fullText = `To: ${emails.join(', ')}\nSubject: ${generatedSubject}\n\n${generatedBody}`;
     navigator.clipboard.writeText(fullText).then(() => {
       const s = document.getElementById('copySuccess');
       s.style.display = 'block';
