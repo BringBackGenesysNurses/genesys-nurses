@@ -623,7 +623,7 @@
     <div class="target-card">
       <div class="target-name">Robert G. Riney</div>
       <div class="target-title">President & CEO, Henry Ford Health</div>
-      <div class="target-email">rriney@hfhs.org</div>
+      <div class="target-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e496968d8a819da48c828c97ca8b9683">[email&#160;protected]</a></div>
     </div>
     <div class="target-card">
       <div class="target-name">Adnan Munkarah, MD</div>
@@ -638,7 +638,7 @@
     <div class="target-card">
       <div class="target-name">Media Relations</div>
       <div class="target-title">Henry Ford Health Press Team</div>
-      <div class="target-email">hfmedia@hfhs.org</div>
+      <div class="target-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9ff7f9f2fafbf6fedff7f9f7ecb1f0edf8">[email&#160;protected]</a></div>
     </div>
   </div>
 </section>
@@ -760,24 +760,329 @@
   // Collect selected recipients
   function getRecipients() {
     const checked = document.querySelectorAll('#recipientCheckboxes input:checked');
-    const emails = [];
-    const names = [];
-    checked.forEach(c => {
-      emails.push(c.value);
-      names.push(c.dataset.name);
-    });
+    const emails = [], names = [];
+    checked.forEach(c => { emails.push(c.value); names.push(c.dataset.name); });
     return { emails, names };
   }
 
   let generatedSubject = '';
   let generatedBody = '';
 
-  async function generateEmail() {
+  // ─────────────────────────────────────────────
+  // EMAIL TEMPLATE LIBRARY
+  // Each template is a function that receives
+  // { name, city, note } and returns { subject, body }
+  // Templates are tagged by tone[] and relationship[]
+  // ─────────────────────────────────────────────
+  const templates = [
+
+    // ── FIRM ──────────────────────────────────────────────────────────────────
+
+    {
+      tone: ['firm'],
+      relationship: ['family', 'concerned', 'community', 'labor', 'healthcare', 'patient'],
+      build: ({ name, city, note }) => ({
+        subject: `Demand: Reinstate All Striking Nurses at Henry Ford Genesys — No Exceptions`,
+        body: `Dear Mr. Riney and Henry Ford Health Leadership,
+
+I am writing to you today with a clear and non-negotiable message: the striking nurses at Henry Ford Genesys Hospital must be guaranteed their jobs back — every single one of them, with full seniority and benefits intact.
+
+${note ? note + '\n\n' : ''}Over ${days} days ago, 750 nurses walked off the job because Henry Ford refused to address dangerous nurse-to-patient ratios. These are not troublemakers. They are experienced, dedicated professionals who took an enormous personal and financial risk to protect their patients and their profession. Now that a tentative agreement has been reached, you are standing in the way of resolution by refusing to guarantee their reinstatement.
+
+Let me be direct: rewarding replacement workers — brought in specifically to undermine a legally protected strike — while denying job security to your own experienced staff is morally indefensible. It is also, I would argue, exactly the kind of conduct the NLRB Unfair Labor Practice charges already filed against Henry Ford Health were designed to address.
+
+The community of Genesee County is watching. Your patients are watching. I am watching.
+
+Finalize a fair return-to-work agreement that guarantees reinstatement for all striking nurses. Do it now.
+
+Sincerely,
+${name}
+${city}`
+      })
+    },
+
+    {
+      tone: ['firm'],
+      relationship: ['family'],
+      build: ({ name, city, note }) => ({
+        subject: `My Family Member Is a Genesys Nurse — Give Them Their Job Back`,
+        body: `Dear Henry Ford Health Leadership,
+
+I have a personal stake in the resolution of the strike at Henry Ford Genesys Hospital: I have a family member who is one of the 750+ nurses who has been on the picket line for over ${days} days.
+
+${note ? note + '\n\n' : ''}I have watched this person sacrifice financially, physically, and emotionally to stand up for safe patient care. They did not go on strike lightly. They did so because Henry Ford refused to address dangerous staffing conditions that put patients at risk every single day.
+
+Now, with a tentative agreement in reach, you are holding up resolution by refusing to guarantee that these nurses — nurses like my family member — can return to the jobs they have dedicated years of their lives to.
+
+I need you to understand something: these nurses are not replaceable. They know their patients. They know their colleagues. They have built relationships and expertise that no replacement worker hired during a strike can replicate.
+
+Guarantee full reinstatement for every striking nurse. Honor the tentative agreement. End this strike.
+
+${name}
+${city}`
+      })
+    },
+
+    // ── PASSIONATE ────────────────────────────────────────────────────────────
+
+    {
+      tone: ['passionate'],
+      relationship: ['family', 'concerned', 'community', 'labor', 'healthcare', 'patient'],
+      build: ({ name, city, note }) => ({
+        subject: `These Nurses Gave Everything to This Community — Don't Lock Them Out`,
+        body: `Dear Henry Ford Health Leadership,
+
+I am not writing this email as a formality. I am writing it because I am genuinely heartbroken by what is happening at Henry Ford Genesys Hospital — and I need you to hear that.
+
+${note ? note + '\n\n' : ''}For over ${days} days, 750 nurses have stood outside in the cold, sacrificing their income, their stability, and their peace of mind, because they believe so deeply in safe patient care that they were willing to risk everything for it. These are not radicals. These are the people who held patients' hands during their worst moments. Who worked through a pandemic. Who chose nursing — a demanding, often heartbreaking profession — because they care.
+
+And now, at the moment when resolution is finally within reach, Henry Ford is refusing to guarantee these nurses can come home to their jobs. Instead, the hospital wants to reward the replacement workers brought in to break the strike.
+
+I don't know how to overstate how wrong that is.
+
+These nurses built Genesys. They are Genesys. Please — do the right thing. Guarantee every striking nurse their job back, with full seniority and benefits. Finalize the return-to-work agreement. Bring them home.
+
+With urgency and hope,
+${name}
+${city}`
+      })
+    },
+
+    {
+      tone: ['passionate'],
+      relationship: ['patient'],
+      build: ({ name, city, note }) => ({
+        subject: `As a Genesys Patient, I'm Begging You: Bring the Nurses Back`,
+        body: `Dear Henry Ford Health Leadership,
+
+I have been a patient at Henry Ford Genesys Hospital. I know firsthand what it means to be cared for by the nurses who walk those halls.
+
+${note ? note + '\n\n' : ''}When you are vulnerable — frightened, in pain, far from home — a nurse is often the person who makes the difference between despair and hope. The nurses at Genesys provided that for me. They do it for thousands of patients every year.
+
+For over ${days} days, those nurses have been locked out — not because they wanted to be, but because Henry Ford refused to address the unsafe staffing conditions they raised. Now there's a tentative agreement, and still these nurses cannot go back to work because the hospital won't guarantee their jobs.
+
+Meanwhile, patients like me are being cared for by replacement staff who don't know us, who haven't built the relationships and institutional knowledge that your real nurses have.
+
+Please. End this. Guarantee reinstatement for every striking nurse. Sign the return-to-work agreement. Let them come back to their patients.
+
+${name}
+${city}`
+      })
+    },
+
+    {
+      tone: ['passionate'],
+      relationship: ['community'],
+      build: ({ name, city, note }) => ({
+        subject: `Genesee County Needs Its Nurses Back — This Has Gone On Too Long`,
+        body: `Dear Mr. Riney and Henry Ford Health Leadership,
+
+I live in this community. I shop at the same stores as these nurses. My children go to school with their children. I have watched this strike unfold for over ${days} days, and I need you to know what it looks like from where I stand.
+
+${note ? note + '\n\n' : ''}It looks like a large health system grinding down hundreds of working people who asked for nothing more than safe conditions for their patients and basic job security for themselves.
+
+Genesee County is not a wealthy community. The people who need Genesys Hospital most are working families, elderly residents on fixed incomes, people without options. They deserve a hospital staffed by nurses who know them — not replacement workers, not a workforce in constant flux.
+
+You have a tentative agreement. All that stands between these nurses and their jobs is your willingness to guarantee their reinstatement. Make that choice. Be the kind of institution this community deserves.
+
+${name}
+${city}`
+      })
+    },
+
+    // ── PROFESSIONAL ──────────────────────────────────────────────────────────
+
+    {
+      tone: ['professional'],
+      relationship: ['family', 'concerned', 'community', 'labor', 'healthcare', 'patient'],
+      build: ({ name, city, note }) => ({
+        subject: `Return-to-Work Agreement — Urging Immediate Resolution at Henry Ford Genesys`,
+        body: `Dear Mr. Riney and Henry Ford Health Leadership,
+
+I am writing to respectfully but firmly urge Henry Ford Health to finalize a fair return-to-work agreement for the striking nurses at Henry Ford Genesys Hospital in Grand Blanc, Michigan.
+
+${note ? note + '\n\n' : ''}As I understand the current situation, a tentative agreement has been reached on the substantive contract issues after more than ${days} days of strike action. The remaining obstacle is the return-to-work agreement — specifically, whether Henry Ford will guarantee job reinstatement for all 750+ striking nurses, with seniority and benefits preserved.
+
+I would like to make the following points for your consideration:
+
+First, refusing to guarantee reinstatement for striking nurses while retaining replacement workers sets a troubling precedent that undermines the integrity of collective bargaining and may conflict with the legal protections afforded to striking workers under the National Labor Relations Act.
+
+Second, the institutional knowledge and patient relationships held by experienced Genesys nurses represent a significant asset to the hospital and the community it serves. Replacing these nurses with permanent substitutes would represent a measurable loss in care quality.
+
+Third, the multiple Unfair Labor Practice charges already filed with the NLRB suggest a pattern of conduct that will only generate further legal and reputational risk for Henry Ford Health the longer this dispute continues.
+
+I urge you to finalize the return-to-work agreement, guarantee full reinstatement for every striking nurse, and bring this to a swift and fair resolution.
+
+Respectfully,
+${name}
+${city}`
+      })
+    },
+
+    {
+      tone: ['professional'],
+      relationship: ['healthcare'],
+      build: ({ name, city, note }) => ({
+        subject: `A Healthcare Professional's Perspective on the Genesys Nurse Strike`,
+        body: `Dear Henry Ford Health Leadership,
+
+As someone who works in healthcare, I write to you with a perspective shaped by direct experience in the field. I am following the situation at Henry Ford Genesys Hospital closely, and I feel compelled to share my concerns.
+
+${note ? note + '\n\n' : ''}Nurse staffing ratios are not a peripheral issue — they are one of the most well-documented factors affecting patient outcomes in acute care settings. The research is unambiguous: adequate staffing saves lives and reduces preventable adverse events. The nurses at Genesys went on strike precisely because these ratios were dangerously inadequate, and they deserve credit for taking that stand.
+
+Now, over ${days} days into the strike, the core contractual issues appear to be resolved. The outstanding question — whether striking nurses will be guaranteed their jobs back — should not be a stumbling block. These are experienced clinicians whose institutional knowledge and patient relationships are genuinely irreplaceable.
+
+I strongly encourage Henry Ford Health to finalize a return-to-work agreement that fully protects the reinstatement rights of every nurse who participated in this legally protected strike. It is the right clinical decision as much as it is the right ethical one.
+
+Respectfully submitted,
+${name}
+${city}`
+      })
+    },
+
+    // ── URGENT ────────────────────────────────────────────────────────────────
+
+    {
+      tone: ['urgent'],
+      relationship: ['family', 'concerned', 'community', 'labor', 'healthcare', 'patient'],
+      build: ({ name, city, note }) => ({
+        subject: `URGENT: End the Genesys Strike Now — Guarantee Nurse Reinstatement`,
+        body: `Dear Mr. Riney and Henry Ford Health Leadership,
+
+This cannot wait any longer. Over ${days} days. 750 nurses. A tentative deal on the table. And still no resolution — because Henry Ford Health refuses to guarantee that the nurses who built this institution can return to their jobs.
+
+${note ? note + '\n\n' : ''}Let me be absolutely clear about what is at stake:
+
+Every day this drags on, patients at Genesys Hospital receive care from replacement staff rather than experienced nurses who know them. Every day this drags on, 750 families face financial devastation. Every day this drags on, Henry Ford Health's reputation as an employer — and as a community institution — erodes further.
+
+The solution is simple. Guarantee full reinstatement for every striking nurse, with seniority and benefits intact. Do not reward replacement workers at their expense. Sign the return-to-work agreement today.
+
+The NLRB is watching. This community is watching. And every day that passes without resolution is another day Henry Ford chooses to prolong suffering it has the power to end.
+
+End the strike. Now.
+
+${name}
+${city}`
+      })
+    },
+
+    {
+      tone: ['urgent'],
+      relationship: ['labor'],
+      build: ({ name, city, note }) => ({
+        subject: `Solidarity With Genesys Nurses — Resolve This Strike Immediately`,
+        body: `Dear Henry Ford Health Leadership,
+
+As a union member and someone who believes deeply in workers' rights, I am writing to demand immediate resolution of the strike at Henry Ford Genesys Hospital.
+
+${note ? note + '\n\n' : ''}What is happening at Genesys is a textbook example of union-busting. Nurses exercised their legal right to strike over legitimate safety and labor concerns. Henry Ford responded by hiring replacement workers — and now refuses to guarantee the strikers their jobs back, apparently hoping to make those replacements permanent.
+
+This is exactly the kind of bad-faith bargaining the National Labor Relations Act was designed to prevent. The multiple Unfair Labor Practice charges already filed against Henry Ford Health are not coincidences — they reflect a deliberate strategy.
+
+We are ${days} days in. The workers have held the line. The tentative agreement is there. All that is missing is your willingness to honor your obligations to the nurses who made this hospital what it is.
+
+Guarantee reinstatement for every striking nurse. Sign the return-to-work agreement. This ends when you decide it ends.
+
+In solidarity,
+${name}
+${city}`
+      })
+    },
+
+    {
+      tone: ['urgent'],
+      relationship: ['family'],
+      build: ({ name, city, note }) => ({
+        subject: `My Family Can't Wait Any Longer — End This Strike Today`,
+        body: `Dear Henry Ford Health Leadership,
+
+I have a family member who has been on strike at Henry Ford Genesys Hospital for over ${days} days. I am writing to you not as an activist or an organizer, but as a family member who has watched someone I love endure months of financial hardship and uncertainty — all because Henry Ford refuses to finalize a return-to-work agreement.
+
+${note ? note + '\n\n' : ''}My family member became a nurse to help people. They chose Genesys because they believed in its mission. They went on strike because they believed unsafe staffing was putting patients at risk — and they were right to raise that concern.
+
+Now, with a tentative agreement in place, the only thing standing between my family member and their job is Henry Ford's refusal to guarantee reinstatement. Instead, the hospital wants to keep replacement workers — people brought in specifically to break a legally protected strike.
+
+I am asking you, directly and urgently: please end this. Guarantee every striking nurse their job back. Do not punish people for exercising their legal rights. My family — and 750 other families — cannot afford to wait much longer.
+
+${name}
+${city}`
+      })
+    },
+
+    // ── COMMUNITY / MIXED EXTRAS ──────────────────────────────────────────────
+
+    {
+      tone: ['firm', 'professional'],
+      relationship: ['community', 'concerned'],
+      build: ({ name, city, note }) => ({
+        subject: `Genesys Nurses Deserve Better — A Message From ${city}`,
+        body: `Dear Mr. Riney and Henry Ford Health Leadership,
+
+I am a resident of ${city} and a member of the broader community that Henry Ford Genesys Hospital is supposed to serve. I'm writing because what is happening with this strike — now over ${days} days long — reflects a set of choices by Henry Ford leadership that I find deeply troubling.
+
+${note ? note + '\n\n' : ''}These 750 nurses went on strike because they were not safe. Their patients were not safe. Nurse-to-patient ratios at Genesys had reached a point where experienced professionals felt they had no other option but to walk out and force the issue.
+
+A tentative agreement has now been reached. But Henry Ford is holding up the return-to-work process, apparently unwilling to guarantee that the striking nurses can come back to their own jobs — jobs they've held for years, in some cases decades.
+
+This community depends on Genesys. And Genesys depends on the experienced, committed nurses who built it. Please do not sacrifice their livelihoods to send a message to future workers who might dare to organize.
+
+Guarantee full reinstatement. Finalize the agreement. End the strike.
+
+${name}
+${city}`
+      })
+    },
+
+    {
+      tone: ['passionate', 'urgent'],
+      relationship: ['healthcare', 'labor', 'concerned'],
+      build: ({ name, city, note }) => ({
+        subject: `The Nurses at Genesys Stood Up for Patients — Stand Up for Them`,
+        body: `Dear Henry Ford Health Leadership,
+
+There's a simple question at the heart of this strike, and I'd like to ask you to sit with it:
+
+If nurses who risked everything to demand safe conditions for their patients cannot be guaranteed their jobs back, what message does that send to every healthcare worker in this country?
+
+${note ? note + '\n\n' : ''}Over ${days} days ago, 750 nurses at Henry Ford Genesys walked out. Not for higher pay. Not for perks. For safe staffing — for the ability to give each patient the time and attention they deserve without being stretched impossibly thin. They stood up, at enormous personal cost, for the people in their care.
+
+Now there's a tentative agreement. The core issues are resolved. And the final obstacle is whether you will guarantee these nurses their jobs back — or whether you will keep the replacement workers and lock out the people who had the courage to speak up.
+
+I am urging you with everything I have: choose your nurses. Choose the community. Sign the return-to-work agreement and bring them home.
+
+This is the moment that defines what kind of institution Henry Ford Health truly is.
+
+${name}
+${city}`
+      })
+    }
+
+  ];
+
+  // ─────────────────────────────────────────────
+  // SELECTION LOGIC: pick the best matching template,
+  // then randomize among equals
+  // ─────────────────────────────────────────────
+  function pickTemplate(tone, relationship) {
+    // Exact match on both
+    let pool = templates.filter(t =>
+      t.tone.includes(tone) && t.relationship.includes(relationship)
+    );
+    // Fall back: match tone only
+    if (pool.length === 0) {
+      pool = templates.filter(t => t.tone.includes(tone));
+    }
+    // Final fallback: any template
+    if (pool.length === 0) pool = templates;
+    return pool[Math.floor(Math.random() * pool.length)];
+  }
+
+  function generateEmail() {
     const name = document.getElementById('senderName').value.trim() || 'A Concerned Citizen';
     const city = document.getElementById('senderCity').value.trim() || 'Michigan';
-    const relationship = document.getElementById('relationship').value;
-    const personalNote = document.getElementById('personalNote').value.trim();
+    const note = document.getElementById('personalNote').value.trim();
     const tone = selectedTone;
+    const relationship = document.getElementById('relationship').value;
     const { emails, names } = getRecipients();
 
     if (emails.length === 0) {
@@ -785,99 +1090,22 @@
       return;
     }
 
-    const btn = document.getElementById('generateBtn');
-    btn.disabled = true;
-    btn.textContent = 'Generating...';
+    const template = pickTemplate(tone, relationship);
+    const result = template.build({ name, city, note });
+    generatedSubject = result.subject;
+    generatedBody = result.body;
+
+    const meta = document.getElementById('emailMeta');
+    meta.innerHTML = `<p><strong>To:</strong> ${names.join(', ')}</p><p><strong>Subject:</strong> ${generatedSubject}</p>`;
+
+    const bodyEl = document.getElementById('emailBody');
+    bodyEl.textContent = generatedBody;
 
     const preview = document.getElementById('emailPreview');
     preview.classList.add('visible');
-
-    const meta = document.getElementById('emailMeta');
-    meta.innerHTML = `<p><strong>To:</strong> ${names.join(', ')}</p><p><strong>Subject:</strong> Loading...</p>`;
-
-    const bodyEl = document.getElementById('emailBody');
-    bodyEl.innerHTML = `<div class="loading-state"><span class="loading-dot"></span><span class="loading-dot"></span><span class="loading-dot"></span><p style="margin-top:1rem;font-size:0.9rem;">Writing your email...</p></div>`;
-
     preview.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-    const relationshipMap = {
-      family: 'I have a family member who is a nurse currently on strike at Henry Ford Genesys Hospital',
-      patient: 'I am (or have been) a patient at Henry Ford Genesys Hospital',
-      community: 'I am a community member in Genesee County',
-      labor: 'I am a union member and labor rights supporter',
-      healthcare: 'I work in healthcare and understand the nursing profession deeply',
-      concerned: 'I am a concerned American citizen'
-    };
-
-    const toneMap = {
-      firm: 'firm, direct, and assertive — stating clearly what is expected and why, without being aggressive',
-      passionate: 'passionate and emotionally compelling — conveying the human impact and moral urgency of the situation',
-      professional: 'professional and measured — respectful in tone but clear and pointed in substance',
-      urgent: 'urgent and demanding — expressing serious concern and calling for immediate action'
-    };
-
-    const prompt = `You are helping write a powerful advocacy email to leadership at Henry Ford Health about the ongoing nurse strike at Henry Ford Genesys Hospital in Grand Blanc, Michigan.
-
-SITUATION:
-- 750+ nurses (Teamsters Local 332) have been on strike since September 1, 2025 — over ${days} days
-- Core issues: safe nurse-to-patient staffing ratios and job security
-- A tentative contract agreement has been reached on most issues
-- The FINAL STICKING POINT is the return-to-work agreement: Henry Ford wants to keep replacement ("scab") nurses permanently and will not guarantee job reinstatement for all striking nurses
-- The hospital has filed for impasse; Teamsters have filed multiple Unfair Labor Practice charges with the NLRB (refusing to bargain, making illegal threats, false impasse declaration)
-- Nursing Chief Nursing Executive: Eric Wallis. CEO: Robert G. Riney
-
-EMAIL WRITER:
-- Name: ${name}
-- City: ${city}  
-- Relationship: ${relationshipMap[relationship]}
-- Personal note to weave in (if provided): "${personalNote || 'None'}"
-
-TONE: The email should be ${toneMap[tone]}.
-
-DEMANDS to include:
-1. Guarantee full reinstatement rights for ALL striking nurses with no loss of seniority or benefits
-2. Do not use the return-to-work agreement to reward replacement workers at the expense of experienced nurses who built this hospital
-3. Finalize a fair return-to-work agreement NOW and end the strike
-4. Honor the tentative agreement reached and get nurses back to work
-
-FORMAT:
-Write a complete, ready-to-send email. Start with a compelling subject line on its own line labeled "Subject: ". Then write the full email body starting with a salutation (to Henry Ford Health Leadership). End with the sender's name (${name}) and city (${city}). 
-
-Keep it to 250-400 words. Make it feel personal, not like a form letter. Do NOT include placeholders like [YOUR NAME]. The email should feel like it genuinely came from ${name}.`;
-
-    try {
-      const response = await fetch("https://api.anthropic.com/v1/messages", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          model: "claude-sonnet-4-20250514",
-          max_tokens: 1000,
-          messages: [{ role: "user", content: prompt }]
-        })
-      });
-
-      const data = await response.json();
-      const text = data.content.map(i => i.text || '').join('');
-
-      // Parse subject line
-      const subjectMatch = text.match(/^Subject:\s*(.+)$/m);
-      generatedSubject = subjectMatch ? subjectMatch[1].trim() : 'End the Strike: Guarantee Reinstatement for Genesys Nurses';
-
-      // Remove subject line from body
-      generatedBody = text.replace(/^Subject:\s*.+\n?/m, '').trim();
-
-      meta.innerHTML = `<p><strong>To:</strong> ${names.join(', ')}</p><p><strong>Subject:</strong> ${generatedSubject}</p>`;
-      bodyEl.textContent = generatedBody;
-
-    } catch (err) {
-      bodyEl.textContent = 'Sorry, there was an error generating your email. Please try again or copy the template below.\n\nDear Henry Ford Health Leadership,\n\nI am writing to demand you finalize a fair return-to-work agreement for the 750+ nurses at Henry Ford Genesys Hospital who have been on strike since September 1, 2025. A tentative agreement has been reached — but without guaranteed job reinstatement for all striking nurses, there is no deal.\n\nYou must guarantee full reinstatement rights for every nurse, with no loss of seniority or benefits. Do not use the return-to-work process to reward replacement workers at the expense of dedicated nurses who have served this community for years.\n\nEnd this strike now. Bring our nurses home.\n\nSincerely,\n' + name;
-      generatedBody = bodyEl.textContent;
-      generatedSubject = 'Demand: Guarantee Reinstatement for All Striking Genesys Nurses';
-      meta.innerHTML = `<p><strong>To:</strong> ${names.join(', ')}</p><p><strong>Subject:</strong> ${generatedSubject}</p>`;
-    }
-
-    btn.disabled = false;
-    btn.textContent = '✉ Regenerate Email';
+    document.getElementById('generateBtn').textContent = '✉ Generate a Different Email';
   }
 
   function copyEmail() {
@@ -892,10 +1120,4 @@ Keep it to 250-400 words. Make it feel personal, not like a form letter. Do NOT 
   function openMailto() {
     const { emails } = getRecipients();
     const to = emails.join(',');
-    const subject = encodeURIComponent(generatedSubject || 'End the Strike at Henry Ford Genesys Hospital');
-    const body = encodeURIComponent(generatedBody || 'Please see the message regarding the ongoing nurses strike at Henry Ford Genesys Hospital.');
-    window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
-  }
-</script>
-</body>
-</html>
+    const subject
