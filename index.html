@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stand With Genesys Nurses — End the Strike Now</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --red: #C8102E;
+      --dark-red: #8B0A1E;
+      --cream: #FAF6F0;
+      --charcoal: #1A1A1A;
+      --mid: #3D3D3D;
+      --accent: #E8B84B;
+      --stripe: rgba(200,16,46,0.06);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--charcoal);
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* HERO */
+    .hero {
+      background: var(--charcoal);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 40px,
+        rgba(200,16,46,0.07) 40px,
+        rgba(200,16,46,0.07) 80px
+      );
+    }
+
+    .hero-day-count {
+      font-family: 'Bebas Neue', cursive;
+      font-size: clamp(7rem, 20vw, 16rem);
+      color: var(--red);
+      line-height: 0.9;
+      letter-spacing: 0.02em;
+      position: relative;
+      text-shadow: 0 0 80px rgba(200,16,46,0.4);
+      animation: pulse-glow 2.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% { text-shadow: 0 0 80px rgba(200,16,46,0.4); }
+      50% { text-shadow: 0 0 120px rgba(200,16,46,0.7); }
+    }
+
+    .hero-label {
+      font-family: 'Bebas Neue', cursive;
+      font-size: clamp(1rem, 3vw, 1.6rem);
+      color: var(--accent);
+      letter-spacing: 0.25em;
+      margin-bottom: 0.5rem;
+      position: relative;
+    }
+
+    .hero-sub {
+      font-family: 'DM Serif Display', serif;
+      font-style: italic;
+      font-size: clamp(1.2rem, 3vw, 2rem);
+      color: #fff;
+      margin-top: 1rem;
+      position: relative;
+      max-width: 700px;
+    }
+
+    .hero-tagline {
+      font-size: clamp(0.85rem, 2vw, 1rem);
+      color: rgba(255,255,255,0.55);
+      margin-top: 1.5rem;
+      max-width: 500px;
+      line-height: 1.7;
+      position: relative;
+    }
+
+    .hero-cta {
+      margin-top: 2.5rem;
+      position: relative;
+    }
+
+    .btn-primary {
+      background: var(--red);
+      color: #fff;
+      border: none;
+      font-family: 'Bebas Neue', cursive;
+      font-size: 1.4rem;
+      letter-spacing: 0.1em;
+      padding: 1rem 2.5rem;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+    }
+
+    .btn-primary:hover { background: var(--dark-red); transform: translateY(-2px); }
+    .btn-primary:active { transform: translateY(0); }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      color: rgba(255,255,255,0.35);
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      animation: bounce 1.8s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(8px); }
+    }
+
+    /* FACTS BAND */
+    .facts-band {
+      background: var(--red);
+      padding: 1rem 2rem;
+      display: flex;
+      gap: 3rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .fact-item {
+      text-align: center;
+      color: #fff;
+    }
+
+    .fact-num {
+      font-family: 'Bebas Neue', cursive;
+      font-size: 2.2rem;
+      letter-spacing: 0.05em;
+    }
+
+    .fact-desc {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.85;
+    }
+
+    /* SECTION STYLES */
+    section {
+      padding: 5rem 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .section-eyebrow {
+      font-family: 'Bebas Neue', cursive;
+      font-size: 0.9rem;
+      letter-spacing: 0.3em;
+      color: var(--red);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-body {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: var(--mid);
+      max-width: 680px;
+    }
+
+    .divider {
+      width: 60px;
+      height: 4px;
+      background: var(--red);
+      margin: 1.5rem 0;
+    }
+
+    /* WHAT HAPPENED */
+    .issue-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+
+    .issue-card {
+      background: #fff;
+      border-left: 4px solid var(--red);
+      padding: 1.5rem;
+      box-shadow: 4px 4px 0 rgba(200,16,46,0.1);
+    }
+
+    .issue-card h3 {
+      font-family: 'Bebas Neue', cursive;
+      font-size: 1.1rem;
+      letter-spacing: 0.1em;
+      color: var(--red);
+      margin-bottom: 0.5rem;
+    }
+
+    .issue-card p {
+      font-size: 0.9rem;
+      line-height: 1.65;
+      color: var(--mid);
+    }
+
+    /* TARGETS */
+    .targets-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .target-card {
+      background: var(--charcoal);
+      color: #fff;
+      padding: 1.2rem;
+    }
+
+    .target-name {
+      font-family: 'Bebas Neue', cursive;
+      font-size: 1.1rem;
+      letter-spacing: 0.05em;
+      color: var(--accent);
+    }
+
+    .target-title {
+      font-size: 0.75rem;
+      opacity: 0.6;
+      margin: 0.2rem 0 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .target-email {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.7);
+      word-break: break-all;
+    }
+
+    /* EMAIL FORM SECTION */
+    .email-section {
+      background: #fff;
+      border-top: 6px solid var(--red);
+      padding: 4rem 2rem;
+    }
+
+    .email-section-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    @media (max-width: 600px) {
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.3rem;
+      color: var(--charcoal);
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 2px solid #ddd;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      color: var(--charcoal);
+      background: var(--cream);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--red);
+    }
+
+    textarea { resize: vertical; min-height: 120px; }
+
+    .tone-options {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+
+    .tone-btn {
+      padding: 0.5rem 1rem;
+      border: 2px solid #ddd;
+      background: transparent;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: var(--mid);
+    }
+
+    .tone-btn.active {
+      border-color: var(--red);
+      background: var(--red);
+      color: #fff;
+    }
+
+    .generate-btn {
+      background: var(--charcoal);
+      color: #fff;
+      border: none;
+      font-family: 'Bebas Neue', cursive;
+      font-size: 1.4rem;
+      letter-spacing: 0.1em;
+      padding: 1rem 2.5rem;
+      cursor: pointer;
+      transition: background 0.2s;
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+
+    .generate-btn:hover { background: var(--red); }
+    .generate-btn:disabled { opacity: 0.5; cursor: not-allowed; background: var(--charcoal); }
+
+    /* EMAIL PREVIEW */
+    .email-preview {
+      margin-top: 2.5rem;
+      display: none;
+    }
+
+    .email-preview.visible { display: block; }
+
+    .preview-header {
+      background: var(--charcoal);
+      color: #fff;
+      padding: 1rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .preview-header h3 {
+      font-family: 'Bebas Neue', cursive;
+      font-size: 1.1rem;
+      letter-spacing: 0.1em;
+    }
+
+    .preview-actions {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .preview-btn {
+      padding: 0.4rem 1rem;
+      border: 1px solid rgba(255,255,255,0.3);
+      background: transparent;
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .preview-btn:hover { background: rgba(255,255,255,0.1); }
+    .preview-btn.primary-action { background: var(--red); border-color: var(--red); }
+    .preview-btn.primary-action:hover { background: var(--dark-red); }
+
+    .email-body-preview {
+      background: var(--cream);
+      border: 2px solid #ddd;
+      padding: 1.5rem;
+      font-size: 0.95rem;
+      line-height: 1.75;
+      color: var(--charcoal);
+      white-space: pre-wrap;
+      min-height: 200px;
+    }
+
+    .email-meta {
+      background: #fff;
+      border: 2px solid #ddd;
+      border-bottom: none;
+      padding: 0.75rem 1.5rem;
+    }
+
+    .email-meta p { font-size: 0.85rem; margin-bottom: 0.3rem; color: var(--mid); }
+    .email-meta strong { color: var(--charcoal); }
+
+    .loading-state {
+      text-align: center;
+      padding: 2rem;
+      color: var(--mid);
+    }
+
+    .loading-dot {
+      display: inline-block;
+      width: 8px; height: 8px;
+      background: var(--red);
+      border-radius: 50%;
+      margin: 0 3px;
+      animation: dot-bounce 1.2s infinite ease-in-out;
+    }
+
+    .loading-dot:nth-child(2) { animation-delay: 0.2s; }
+    .loading-dot:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes dot-bounce {
+      0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+      40% { transform: scale(1); opacity: 1; }
+    }
+
+    /* COPY SUCCESS */
+    .copy-success {
+      background: #22c55e;
+      color: #fff;
+      padding: 0.5rem 1rem;
+      font-size: 0.85rem;
+      display: none;
+      text-align: center;
+      margin-top: 0.5rem;
+    }
+
+    /* SHARE / FOOTER */
+    .share-section {
+      background: var(--red);
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+
+    .share-section h2 {
+      font-family: 'Bebas Neue', cursive;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      color: #fff;
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+    }
+
+    .share-section p {
+      color: rgba(255,255,255,0.8);
+      font-size: 1rem;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+      line-height: 1.7;
+    }
+
+    .share-links {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .share-link {
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      text-decoration: none;
+      padding: 0.75rem 1.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      transition: background 0.2s;
+      letter-spacing: 0.05em;
+    }
+
+    .share-link:hover { background: rgba(255,255,255,0.3); }
+
+    footer {
+      background: var(--charcoal);
+      color: rgba(255,255,255,0.4);
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.8rem;
+      line-height: 1.7;
+    }
+
+    .strike-notice {
+      background: rgba(232,184,75,0.15);
+      border: 2px solid var(--accent);
+      padding: 1rem 1.5rem;
+      margin: 2rem 0;
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: var(--mid);
+    }
+
+    .strike-notice strong { color: var(--charcoal); }
+
+    /* Checkbox group */
+    .checkbox-group {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      cursor: pointer;
+      text-transform: none;
+      letter-spacing: 0;
+      font-weight: 400;
+    }
+
+    .checkbox-label input[type="checkbox"] {
+      width: auto;
+      margin: 0;
+      accent-color: var(--red);
+    }
+
+    .form-group { margin-bottom: 1rem; }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-label">Henry Ford Genesys Hospital — Grand Blanc, Michigan</div>
+  <div class="hero-day-count" id="dayCount">173</div>
+  <div class="hero-sub">Days on the Picket Line. No End in Sight.</div>
+  <p class="hero-tagline">750 nurses and case workers have been on strike since Labor Day. A tentative deal is close — but the hospital wants to keep scab nurses and lock out the real ones. Tell them that's not acceptable.</p>
+  <div class="hero-cta">
+    <button class="btn-primary" onclick="document.getElementById('act').scrollIntoView({behavior:'smooth'})">Send an Email Now →</button>
+  </div>
+  <div class="scroll-hint">↓ SCROLL ↓</div>
+</div>
+
+<!-- FACTS BAND -->
+<div class="facts-band">
+  <div class="fact-item">
+    <div class="fact-num">750+</div>
+    <div class="fact-desc">Nurses on Strike</div>
+  </div>
+  <div class="fact-item">
+    <div class="fact-num">Sept 1</div>
+    <div class="fact-desc">Strike Began</div>
+  </div>
+  <div class="fact-item">
+    <div class="fact-num">3</div>
+    <div class="fact-desc">NLRB Charges Filed</div>
+  </div>
+  <div class="fact-item">
+    <div class="fact-num">70+</div>
+    <div class="fact-desc">Negotiation Sessions</div>
+  </div>
+</div>
+
+<!-- WHAT'S HAPPENING -->
+<section>
+  <div class="section-eyebrow">What's Happening</div>
+  <h2 class="section-title">The Hospital Has a Deal — But Won't Guarantee Jobs for Striking Nurses</h2>
+  <div class="divider"></div>
+  <p class="section-body">After over 170 days on the picket line, Teamsters Local 332 and Henry Ford Genesys Hospital have reached a tentative agreement on the core contract issues. But one major hurdle remains: the <strong>return-to-work agreement</strong>. Henry Ford wants to reward the replacement ("scab") nurses it hired during the strike with permanent positions — potentially at the expense of the nurses who built their careers at Genesys. These nurses — many with decades of experience — deserve their jobs back, unconditionally.</p>
+
+  <div class="strike-notice">
+    <strong>⚠️ The Teamsters have filed multiple Unfair Labor Practice charges</strong> with the National Labor Relations Board against Henry Ford Genesys, including charges of refusing to bargain, making illegal threats against nurses, and declaring a false impasse.
+  </div>
+
+  <div class="issue-cards">
+    <div class="issue-card">
+      <h3>Job Security</h3>
+      <p>Henry Ford refuses to guarantee the jobs of 750+ striking nurses, preferring to retain the replacement workers brought in to break the strike.</p>
+    </div>
+    <div class="issue-card">
+      <h3>Safe Staffing Ratios</h3>
+      <p>Nurses walked out over unsafe nurse-to-patient ratios that put their patients at risk. This was the core issue that launched the strike.</p>
+    </div>
+    <div class="issue-card">
+      <h3>Unfair Labor Practices</h3>
+      <p>The NLRB has received multiple charges — including allegations that Henry Ford refused face-to-face bargaining and made illegal threats against nurses.</p>
+    </div>
+    <div class="issue-card">
+      <h3>Community Impact</h3>
+      <p>Genesys is the primary hospital serving Genesee County's largely working-class and low-income community. Disrupting its experienced nursing staff puts patients at risk.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHO TO CONTACT -->
+<section style="padding-top: 0;">
+  <div class="section-eyebrow">Who Decides</div>
+  <h2 class="section-title">Key Decision Makers</h2>
+  <div class="divider"></div>
+  <p class="section-body">These leaders have the power to bring the striking nurses back to work — with full job protections — and end this standoff today.</p>
+
+  <div class="targets-grid">
+    <div class="target-card">
+      <div class="target-name">Robert G. Riney</div>
+      <div class="target-title">President & CEO, Henry Ford Health</div>
+      <div class="target-email">rriney@hfhs.org</div>
+    </div>
+    <div class="target-card">
+      <div class="target-name">Adnan Munkarah, MD</div>
+      <div class="target-title">President, Clinical Enterprise & Chief Physician Executive</div>
+      <div class="target-email">Henry Ford Health Leadership</div>
+    </div>
+    <div class="target-card">
+      <div class="target-name">Eric Wallis</div>
+      <div class="target-title">Chief Nursing Executive, Henry Ford Health</div>
+      <div class="target-email">Henry Ford Health</div>
+    </div>
+    <div class="target-card">
+      <div class="target-name">Media Relations</div>
+      <div class="target-title">Henry Ford Health Press Team</div>
+      <div class="target-email">hfmedia@hfhs.org</div>
+    </div>
+  </div>
+</section>
+
+<!-- EMAIL COMPOSER -->
+<div class="email-section" id="act">
+  <div class="email-section-inner">
+    <div class="section-eyebrow">Take Action</div>
+    <h2 class="section-title">Generate Your Email</h2>
+    <div class="divider"></div>
+    <p class="section-body" style="margin-bottom: 2rem;">Tell us a little about yourself and we'll create a personalized, powerful email you can send directly to Henry Ford Health leadership. Every message counts.</p>
+
+    <!-- Who to send to -->
+    <div class="form-group">
+      <label>Send to (select all that apply)</label>
+      <div class="checkbox-group" id="recipientCheckboxes">
+        <label class="checkbox-label"><input type="checkbox" value="rriney@hfhs.org" data-name="Robert Riney (CEO)" checked> Robert Riney — CEO</label>
+        <label class="checkbox-label"><input type="checkbox" value="hfmedia@hfhs.org" data-name="Henry Ford Media Relations" checked> Media Relations</label>
+        <label class="checkbox-label"><input type="checkbox" value="hfgenesys@hfhs.org" data-name="Henry Ford Genesys Hospital"> Genesys Hospital General</label>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="senderName">Your Name</label>
+        <input type="text" id="senderName" placeholder="Jane Smith">
+      </div>
+      <div class="form-group">
+        <label for="senderCity">Your City / Town</label>
+        <input type="text" id="senderCity" placeholder="Grand Blanc, MI">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="relationship">Your connection to this issue</label>
+      <select id="relationship">
+        <option value="family">I have a family member who is a nurse / on strike</option>
+        <option value="patient">I am or have been a patient at Genesys Hospital</option>
+        <option value="community">I'm a community member in Genesee County</option>
+        <option value="labor">I'm a union member / labor supporter</option>
+        <option value="healthcare">I work in healthcare</option>
+        <option value="concerned">I'm a concerned citizen</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="personalNote">Personal note (optional — makes your email much more powerful)</label>
+      <textarea id="personalNote" placeholder="E.g. My sister has worked at Genesys for 18 years and dedicated her career to this community..."></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Email tone</label>
+      <div class="tone-options">
+        <button class="tone-btn active" data-tone="firm">Firm & Direct</button>
+        <button class="tone-btn" data-tone="passionate">Passionate & Emotional</button>
+        <button class="tone-btn" data-tone="professional">Professional & Measured</button>
+        <button class="tone-btn" data-tone="urgent">Urgent & Demanding</button>
+      </div>
+    </div>
+
+    <button class="generate-btn" id="generateBtn" onclick="generateEmail()">✉ Generate My Email</button>
+
+    <!-- EMAIL PREVIEW -->
+    <div class="email-preview" id="emailPreview">
+      <div class="preview-header">
+        <h3>Your Personalized Email</h3>
+        <div class="preview-actions">
+          <button class="preview-btn" onclick="copyEmail()">Copy Email</button>
+          <button class="preview-btn primary-action" onclick="openMailto()">Open in Mail App →</button>
+        </div>
+      </div>
+      <div class="email-meta" id="emailMeta"></div>
+      <div class="email-body-preview" id="emailBody">
+        <div class="loading-state">
+          <span class="loading-dot"></span>
+          <span class="loading-dot"></span>
+          <span class="loading-dot"></span>
+          <p style="margin-top:1rem; font-size:0.9rem;">Writing your email...</p>
+        </div>
+      </div>
+      <div class="copy-success" id="copySuccess">✓ Copied to clipboard!</div>
+    </div>
+  </div>
+</div>
+
+<!-- SHARE -->
+<div class="share-section">
+  <h2>Spread the Word</h2>
+  <p>Share this page with friends, family, and your community. The more voices, the harder they are to ignore.</p>
+  <div class="share-links">
+    <a href="https://twitter.com/intent/tweet?text=750+nurses+at+Henry+Ford+Genesys+Hospital+have+been+on+strike+for+over+170+days.+The+hospital+wants+to+keep+scab+workers+instead+of+letting+experienced+nurses+return.+This+is+wrong.+%23GenesysNurses+%23Teamsters332" target="_blank" class="share-link">Share on X / Twitter</a>
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https://teamster.org/category/teamsters-local-332/" target="_blank" class="share-link">Share on Facebook</a>
+    <a href="https://www.linkedin.com/shareArticle?mini=true&title=Support+Genesys+Nurses&summary=750+nurses+have+been+on+strike+for+over+170+days.+Help+them+get+back+to+work+safely." target="_blank" class="share-link">Share on LinkedIn</a>
+  </div>
+</div>
+
+<footer>
+  <p>This page was created by a supporter of the Henry Ford Genesys Hospital nurses. It is not affiliated with or endorsed by Teamsters Local 332 or Henry Ford Health.</p>
+  <p style="margin-top:0.5rem;">Strike began September 1, 2025 · Grand Blanc, Michigan · #GenesysNurses #Teamsters332</p>
+</footer>
+
+<script>
+  // Day counter
+  const strikeStart = new Date('2025-09-01');
+  const today = new Date();
+  const days = Math.floor((today - strikeStart) / (1000*60*60*24));
+  document.getElementById('dayCount').textContent = days;
+
+  // Tone buttons
+  let selectedTone = 'firm';
+  document.querySelectorAll('.tone-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tone-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      selectedTone = btn.dataset.tone;
+    });
+  });
+
+  // Collect selected recipients
+  function getRecipients() {
+    const checked = document.querySelectorAll('#recipientCheckboxes input:checked');
+    const emails = [];
+    const names = [];
+    checked.forEach(c => {
+      emails.push(c.value);
+      names.push(c.dataset.name);
+    });
+    return { emails, names };
+  }
+
+  let generatedSubject = '';
+  let generatedBody = '';
+
+  async function generateEmail() {
+    const name = document.getElementById('senderName').value.trim() || 'A Concerned Citizen';
+    const city = document.getElementById('senderCity').value.trim() || 'Michigan';
+    const relationship = document.getElementById('relationship').value;
+    const personalNote = document.getElementById('personalNote').value.trim();
+    const tone = selectedTone;
+    const { emails, names } = getRecipients();
+
+    if (emails.length === 0) {
+      alert('Please select at least one recipient.');
+      return;
+    }
+
+    const btn = document.getElementById('generateBtn');
+    btn.disabled = true;
+    btn.textContent = 'Generating...';
+
+    const preview = document.getElementById('emailPreview');
+    preview.classList.add('visible');
+
+    const meta = document.getElementById('emailMeta');
+    meta.innerHTML = `<p><strong>To:</strong> ${names.join(', ')}</p><p><strong>Subject:</strong> Loading...</p>`;
+
+    const bodyEl = document.getElementById('emailBody');
+    bodyEl.innerHTML = `<div class="loading-state"><span class="loading-dot"></span><span class="loading-dot"></span><span class="loading-dot"></span><p style="margin-top:1rem;font-size:0.9rem;">Writing your email...</p></div>`;
+
+    preview.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    const relationshipMap = {
+      family: 'I have a family member who is a nurse currently on strike at Henry Ford Genesys Hospital',
+      patient: 'I am (or have been) a patient at Henry Ford Genesys Hospital',
+      community: 'I am a community member in Genesee County',
+      labor: 'I am a union member and labor rights supporter',
+      healthcare: 'I work in healthcare and understand the nursing profession deeply',
+      concerned: 'I am a concerned American citizen'
+    };
+
+    const toneMap = {
+      firm: 'firm, direct, and assertive — stating clearly what is expected and why, without being aggressive',
+      passionate: 'passionate and emotionally compelling — conveying the human impact and moral urgency of the situation',
+      professional: 'professional and measured — respectful in tone but clear and pointed in substance',
+      urgent: 'urgent and demanding — expressing serious concern and calling for immediate action'
+    };
+
+    const prompt = `You are helping write a powerful advocacy email to leadership at Henry Ford Health about the ongoing nurse strike at Henry Ford Genesys Hospital in Grand Blanc, Michigan.
+
+SITUATION:
+- 750+ nurses (Teamsters Local 332) have been on strike since September 1, 2025 — over ${days} days
+- Core issues: safe nurse-to-patient staffing ratios and job security
+- A tentative contract agreement has been reached on most issues
+- The FINAL STICKING POINT is the return-to-work agreement: Henry Ford wants to keep replacement ("scab") nurses permanently and will not guarantee job reinstatement for all striking nurses
+- The hospital has filed for impasse; Teamsters have filed multiple Unfair Labor Practice charges with the NLRB (refusing to bargain, making illegal threats, false impasse declaration)
+- Nursing Chief Nursing Executive: Eric Wallis. CEO: Robert G. Riney
+
+EMAIL WRITER:
+- Name: ${name}
+- City: ${city}  
+- Relationship: ${relationshipMap[relationship]}
+- Personal note to weave in (if provided): "${personalNote || 'None'}"
+
+TONE: The email should be ${toneMap[tone]}.
+
+DEMANDS to include:
+1. Guarantee full reinstatement rights for ALL striking nurses with no loss of seniority or benefits
+2. Do not use the return-to-work agreement to reward replacement workers at the expense of experienced nurses who built this hospital
+3. Finalize a fair return-to-work agreement NOW and end the strike
+4. Honor the tentative agreement reached and get nurses back to work
+
+FORMAT:
+Write a complete, ready-to-send email. Start with a compelling subject line on its own line labeled "Subject: ". Then write the full email body starting with a salutation (to Henry Ford Health Leadership). End with the sender's name (${name}) and city (${city}). 
+
+Keep it to 250-400 words. Make it feel personal, not like a form letter. Do NOT include placeholders like [YOUR NAME]. The email should feel like it genuinely came from ${name}.`;
+
+    try {
+      const response = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model: "claude-sonnet-4-20250514",
+          max_tokens: 1000,
+          messages: [{ role: "user", content: prompt }]
+        })
+      });
+
+      const data = await response.json();
+      const text = data.content.map(i => i.text || '').join('');
+
+      // Parse subject line
+      const subjectMatch = text.match(/^Subject:\s*(.+)$/m);
+      generatedSubject = subjectMatch ? subjectMatch[1].trim() : 'End the Strike: Guarantee Reinstatement for Genesys Nurses';
+
+      // Remove subject line from body
+      generatedBody = text.replace(/^Subject:\s*.+\n?/m, '').trim();
+
+      meta.innerHTML = `<p><strong>To:</strong> ${names.join(', ')}</p><p><strong>Subject:</strong> ${generatedSubject}</p>`;
+      bodyEl.textContent = generatedBody;
+
+    } catch (err) {
+      bodyEl.textContent = 'Sorry, there was an error generating your email. Please try again or copy the template below.\n\nDear Henry Ford Health Leadership,\n\nI am writing to demand you finalize a fair return-to-work agreement for the 750+ nurses at Henry Ford Genesys Hospital who have been on strike since September 1, 2025. A tentative agreement has been reached — but without guaranteed job reinstatement for all striking nurses, there is no deal.\n\nYou must guarantee full reinstatement rights for every nurse, with no loss of seniority or benefits. Do not use the return-to-work process to reward replacement workers at the expense of dedicated nurses who have served this community for years.\n\nEnd this strike now. Bring our nurses home.\n\nSincerely,\n' + name;
+      generatedBody = bodyEl.textContent;
+      generatedSubject = 'Demand: Guarantee Reinstatement for All Striking Genesys Nurses';
+      meta.innerHTML = `<p><strong>To:</strong> ${names.join(', ')}</p><p><strong>Subject:</strong> ${generatedSubject}</p>`;
+    }
+
+    btn.disabled = false;
+    btn.textContent = '✉ Regenerate Email';
+  }
+
+  function copyEmail() {
+    const fullText = `Subject: ${generatedSubject}\n\n${generatedBody}`;
+    navigator.clipboard.writeText(fullText).then(() => {
+      const s = document.getElementById('copySuccess');
+      s.style.display = 'block';
+      setTimeout(() => s.style.display = 'none', 3000);
+    });
+  }
+
+  function openMailto() {
+    const { emails } = getRecipients();
+    const to = emails.join(',');
+    const subject = encodeURIComponent(generatedSubject || 'End the Strike at Henry Ford Genesys Hospital');
+    const body = encodeURIComponent(generatedBody || 'Please see the message regarding the ongoing nurses strike at Henry Ford Genesys Hospital.');
+    window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+  }
+</script>
+</body>
+</html>
